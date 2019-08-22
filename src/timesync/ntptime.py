@@ -30,16 +30,20 @@ class NTPTime():
             self.curdir = os.path.join(self.curdir, dir)
             if dir == 'GrabTicket':
                 break
+        
+        self.local_time = None
 
     def __del__(self):
         pass
 
     def loadConf(self):
-        pass
+        conf_path = os.path.join(self.curdir, 'config/ntp.yaml')
+        with open(conf_path) as f:
+            self.conf = yaml.safe_load(f)
 
     def __syncOnce(self):
         local_time = 0
-        remote_time = self.client.request('pool.ntp.org').tx_time
+        remote_time = self.client.request(self.conf['server']).tx_time
 
         # _date = time.strftime('%Y-%m-%d', time.localtime(ts))
         # _time = time.strftime('%X', time.localtime(ts))
@@ -48,10 +52,11 @@ class NTPTime():
         return local_time, remote_time
 
     def syncTime(self):
-        pass
-        self.response = self.client.request('pool.ntp.org')
-        return response
+        print self.__syncOnce()
+
 
 if __name__ == '__main__':
     print sys.argv
     c = NTPTime(sys.argv[0])
+    c.loadConf()
+    c.syncTime()
