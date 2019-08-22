@@ -11,6 +11,7 @@
 # here put the import lib
 
 import os
+import sys
 import time
 import ntplib
 import yaml
@@ -21,11 +22,17 @@ class NTPTime():
     NTPTime sync client
     """
 
-    def __init__(self):
+    def __init__(self, argv0):
         self.client = ntplib.NTPClient()
+        opath = argv0.split('/')
+        self.curdir = '/'
+        for dir in opath:
+            self.curdir = os.path.join(self.curdir, dir)
+            if dir == 'GrabTicket':
+                break
 
     def __del__(self):
-        self.client.close()
+        pass
 
     def loadConf(self):
         pass
@@ -44,3 +51,7 @@ class NTPTime():
         pass
         self.response = self.client.request('pool.ntp.org')
         return response
+
+if __name__ == '__main__':
+    print sys.argv
+    c = NTPTime(sys.argv[0])
