@@ -12,7 +12,7 @@
 
 import os
 import sys
-import time
+import datetime
 import ntplib
 import yaml
 
@@ -30,8 +30,6 @@ class NTPTime():
             self.curdir = os.path.join(self.curdir, dir)
             if dir == 'GrabTicket':
                 break
-        
-        self.local_time = None
 
     def __del__(self):
         pass
@@ -42,13 +40,16 @@ class NTPTime():
             self.conf = yaml.safe_load(f)
 
     def __syncOnce(self):
-        local_time = 0
+        local_time = datetime.datetime.now()
         remote_time = self.client.request(self.conf['server']).tx_time
+        local_time2 = datetime.datetime.now()
+        print local_time, local_time2
 
         # _date = time.strftime('%Y-%m-%d', time.localtime(ts))
         # _time = time.strftime('%X', time.localtime(ts))
         # _ms = ts-int(ts)
 
+        # FIXME: calculate local time
         return local_time, remote_time
 
     def syncTime(self):
