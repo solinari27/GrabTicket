@@ -3,7 +3,7 @@
 '''
 @File    :   ntptime.py
 @Time    :   2019/08/21 22:42:13
-@Author  :   Solinari 
+@Author  :   Solinari
 @Contact :   deeper1@163.com
 @License :   (C)Copyright 2017-2018, GPLv3
 '''
@@ -40,24 +40,29 @@ class NTPTime():
             self.conf = yaml.safe_load(f)
 
     def __syncOnce(self):
-        local_time = datetime.datetime.now()
-        remote_time = self.client.request(self.conf['server']).tx_time
-        local_time2 = datetime.datetime.now()
-        print local_time, local_time2
+        """
+        sync ntp time once with localtime
+        """
+
+        # local_time = datetime.datetime.now()
+        response = self.client.request(self.conf['server'])
+        tx_time = response.tx_time
+
+        return tx_time
+
+    def syncTime(self):
+        """
+        sync time with ntp time
+        """
 
         # _date = time.strftime('%Y-%m-%d', time.localtime(ts))
         # _time = time.strftime('%X', time.localtime(ts))
         # _ms = ts-int(ts)
 
-        # FIXME: calculate local time
-        return local_time, remote_time
-
-    def syncTime(self):
-        print self.__syncOnce()
+        return self.__syncOnce
 
 
 if __name__ == '__main__':
-    print sys.argv
     c = NTPTime(sys.argv[0])
     c.loadConf()
     c.syncTime()
