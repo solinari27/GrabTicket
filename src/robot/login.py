@@ -28,10 +28,10 @@ class LoginParser(HTMLParser):  # 继承基类HTMLParser，同时改写基类几
 
     def handle_starttag(self, tag, attrs):
         if tag == 'div':
-            print attrs
+            print self.get_starttag_text()
 
-    def handle_data(self, data):
-        print (data)
+    # def handle_data(self, data):
+    #     print (data)
 
     def close(self):
         HTMLParser.close(self)
