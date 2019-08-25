@@ -53,6 +53,9 @@ soup = BeautifulSoup(page, 'lxml')
 #     print "item: ", item
 #     print type(item)
 #     print item.head.string
-print soup.find_all('div')
+# print soup.find_all('div')
 for tag in soup.find_all(re.compile("^div")):
-    print(tag.name)
+# for item in soup.descendants:
+    print tag.attrs
+    if tag.attrs.get('class') == ['oa-image']:
+        print 'find'
