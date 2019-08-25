@@ -12,8 +12,11 @@
 
 import urllib2
 import requests
+import lxml
+import re
 
 from HTMLParser import HTMLParser
+from bs4 import BeautifulSoup
 
 
 class Login():
@@ -27,11 +30,10 @@ class LoginParser(HTMLParser):  # 继承基类HTMLParser，同时改写基类几
         # self.links = []
 
     def handle_starttag(self, tag, attrs):
-        if tag == 'div':
+        if tag == 'img':
             print self.get_starttag_text()
-
-    # def handle_data(self, data):
-    #     print (data)
+            # def handle_data(self, data):
+            #     print (data)
 
     def close(self):
         HTMLParser.close(self)
@@ -41,6 +43,16 @@ url = 'https://guahao.zjol.com.cn/login'
 resp = urllib2.urlopen(url)
 page = resp.read()
 # print (page)
-parser = LoginParser()
-parser.feed(page)
-parser.close()
+# parser = LoginParser()
+# parser.feed(page)
+# parser.close()
+
+soup = BeautifulSoup(page, 'lxml')
+# print soup.prettify()
+# for item in soup.descendants:
+#     print "item: ", item
+#     print type(item)
+#     print item.head.string
+print soup.find_all('div')
+for tag in soup.find_all(re.compile("^div")):
+    print(tag.name)
