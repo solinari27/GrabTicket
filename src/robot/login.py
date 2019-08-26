@@ -49,13 +49,15 @@ page = resp.read()
 
 soup = BeautifulSoup(page, 'lxml')
 # print soup.prettify()
-for item in soup.descendants:
-    print "item: ", item
-    print type(item)
+# for item in soup.descendants:
+#     print "item: ", item
+#     print type(item)
 
+# print 'search: '
+# print soup.select('div[class="oa-image"]')
 
 # print soup.find_all('div')
-# for tag in soup.find_all(re.compile("^div")):
-#     print tag.attrs
-#     if tag.attrs.get('class') == ['oa-image']:
-#         print 'find'
+for tag in soup.find_all(re.compile("^div")):
+    # print tag.attrs.get('class')
+    if tag.attrs.get('class') == ['oa-image']:
+        print tag.string
