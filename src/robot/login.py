@@ -59,5 +59,5 @@ soup = BeautifulSoup(page, 'lxml')
 # print soup.find_all('div')
 for tag in soup.find_all(re.compile("^div")):
     # print tag.attrs.get('class')
-    if tag.attrs.get('class') == ['oa-image']:
-        print tag.string
+    if tag.attrs.get('class') == ['u-lb-yzm']:
+        print 'find: ', tag.string
