@@ -61,3 +61,5 @@ for tag in soup.find_all(re.compile("^div")):
     # print tag.attrs.get('class')
     if tag.attrs.get('class') == ['u-lb-yzm']:
         print 'find: ', tag.string
+        # page is not full
+        # use chrome headless to get yzm
